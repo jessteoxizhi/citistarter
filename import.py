@@ -12,7 +12,8 @@ db = scoped_session(
     sessionmaker(bind=engine))  # create a 'scoped session' that ensures different users' interactions with the
 # database are kept separate
 
-# uncomment this to import everything from books.csv again
+# CLOSED to prevent acceidental running and deleting the database
+# uncomment this to import everything from companies.csv again
 sys.exit()
 
 # Drop tables
@@ -71,7 +72,7 @@ db.execute(
 )
 db.commit()
 
-# Import table from books.csv
+# Import table from comapnies.csv
 f = open("companies.csv")
 reader = csv.reader(f)
 csv_headings = next(reader)  # skip the first heading row
