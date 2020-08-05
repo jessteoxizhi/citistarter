@@ -4,6 +4,10 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+pycodestyle = "*"
+pytest = "*"
+pytest-mock = "*"
+pytest-cov = "*"
 
 [packages]
 psycopg2-binary = "*"
@@ -12,5 +16,4 @@ Flask-Session = "*"
 SQLAlchemy = "*"
 requests = "*"
 
-[requires]
-python_version = "3.7"
+
