@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CitiStarter login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+<div class="jumbotron text-center">
+
+    <!-- alert functions to notify user -->
+    {% if alert_user == "loggedin" %}
+        <div class="alert alert-warning">
+            <strong>Login Failed!</strong> Please logout first.
+        </div>
+    {% elif alert_user == "invalidusername" %}
+        <div class="alert alert-warning">
+            <strong>Login Failed!</strong> Username does not exist.
+        </div>
+    {% elif alert_user == "invalidpassword" %}
+        <div class="alert alert-warning">
+            <strong>Login Failed!</strong> Wrong password.
+        </div>
+    {% endif %}
+
+    <h1>CitiStarter Webpage</h1>
+    <p>View company reviews or submit your reviews!</p>
+</div>
+
+<div class="container">
+
+    <!-- display loggedin user information -->
+    {% if loggedin == true %}
+        <div class="row justify-content-md-center">
+            <div class="col text-center">
+                <p>Welcome <span><strong>{{ username }}</strong></span></p>
+            </div>
+             <div class="col text-center">
+                 <p><a href="{{ url_for('search') }}">SEARCH</a></p>
+            </div>
+            <div class="col text-center">
+                <p><a href="{{ url_for('logout') }}">Logout</a></p>
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- card content -->
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <div class="card bg-light">
+                <article class="card-body mx-auto" style="max-width: 400px;">
+                    <h4 class="card-title mt-3 text-center">Welcome back investor!</h4>
+                    <p class="text-center">Login to continue</p>
+
+                    <!-- login form -->
+                    <form action="{{ url_for('login') }}" method="post">
+                        <div class="form-group input-group">
+                            <input name="username" class="form-control" placeholder="Username" type="text" required>
+                        </div> <!--username-->
+                        <div class="form-group input-group">
+                            <input name="password" class="form-control" placeholder="Password"
+                                   type="password" required>
+                        </div> <!--password-->
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-info btn-block">Login</button>
+                        </div> <!--login button-->
+                        <p class="text-center">Don't have an account yet? <a href="{{ url_for('index') }}">Sign Up</a>
+                        </p>
+                    </form>
+
+                </article>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

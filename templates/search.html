@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CitiStarter search</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+<div class="jumbotron text-center">
+    <h1>CitiStarter Webpage</h1>
+    <p>View company reviews or submit your reviews!</p>
+</div>
+
+<div class="container">
+
+    <!-- display loggedin user information -->
+    {% if loggedin == true %}
+        <div class="row">
+            <div class="col-6 text-center">
+                <p>Welcome <span><strong>{{ username }}</strong></span></p>
+            </div>
+            <div class="col-6 text-center">
+                <p><a href="{{ url_for('logout') }}">Logout</a></p>
+            </div>
+        </div>
+    {% endif %}
+
+    <!-- form content -->
+    <div class="row justify-content-center">
+        <div class="col-6 text-center">
+            <div class="card bg-light">
+                <article class="card-body mx-auto" style="max-width: 400px;">
+                    <h4 class="card-title mt-3 text-center">Search For Companies</h4>
+                    <p class="text-center">Enter name, year founded or state (case-insensitive)</p>
+
+                    <!-- search form -->
+                    <form action="{{ url_for('search') }}" method="post">
+                        <div class="form-group input-group">
+                            <input name="name" class="form-control" placeholder="Name" type="text">
+                        </div> <!--name-->
+                        <div class="form-group input-group">
+                            <input name="year_founded" class="form-control" placeholder="Year Founded" type="text">
+                        </div> <!--year_founded-->
+                        <div class="form-group input-group">
+                            <input name="state" class="form-control" placeholder="State" type="text">
+                        </div> <!--state-->
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success btn-block">Search</button>
+                        </div> <!--search button-->
+                    </form>
+
+                </article>
+            </div>
+        </div>
+    </div>
+
+    <!-- divider -->
+    <hr/>
+    <div class="row">
+        <h2>Search Results</h2>
+    </div>
+    <hr/>
+
+    <!-- search results -->
+    <div class="row">
+        <div class="col">
+            {% if search == "emptyfield" %} <!--empty search terms-->
+                <p>Please enter at least one search term!</p>
+            {% elif search == "valid" %} <!--valid search terms-->
+                {% if companies %}
+                    <ol>
+                        {% for company in companies %}
+                            <li>
+                                <a href="{{ url_for('company', company_id=company.company_id) }}">
+                                    <b>{{ company.name }}</b>
+                                    <small>since</small> {{ company.year_founded }}
+                                    <i>company_id:{{ company.company_id }}</i>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ol>
+                {% else %}
+                    <p>No results found.</p>
+                {% endif %}
+            {% else %} <!--default text when page is loaded-->
+                <p>Your search results will be displayed here.</p>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
