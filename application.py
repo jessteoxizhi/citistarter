@@ -215,26 +215,6 @@ def company(company_id):
                            users_rating_count=users_rating_count)
 
 
-# Company info
-@app.route("/info/<string:company_id>")
-def company_info(company_id):
-    """Return details about a single company."""
-    # example usage: /info/2
-
-    # Make sure company with company_id exists
-    company = db.execute(
-        "SELECT company_id, name, industry, description, year_founded, employees, state, city, area, revenue, expenses, profit, growth FROM companies WHERE company_id=:company_id",
-        {"company_id": company_id}).fetchone()
-    if company is None:
-        abort(404)  # return 404 not found error
-
-    # Fetch users ratings from database
-    reviews, users_rating_count, users_rating = get_users_reviews(company_id)
-
-    return render_template("company_info.html", loggedin=True, username=session["this_user"], company=company,
-                            reviews=reviews, users_rating=users_rating,
-                           users_rating_count=users_rating_count)
-
 
 # Return api request
 @app.route("/api/<string:company_id>")
