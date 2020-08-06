@@ -215,6 +215,27 @@ def company(company_id):
                            users_rating_count=users_rating_count)
 
 
+# Company info
+@app.route("/info/<string:company_id>")
+def company_info(company_id):
+    """Return details about a single company."""
+    # example usage: /info/2
+
+    # Make sure company with company_id exists
+    company = db.execute(
+        "SELECT company_id, name, industry, description, year_founded, employees, state, city, area, revenue, expenses, profit, growth FROM companies WHERE company_id=:company_id",
+        {"company_id": company_id}).fetchone()
+    if company is None:
+        abort(404)  # return 404 not found error
+
+    # Fetch users ratings from database
+    reviews, users_rating_count, users_rating = get_users_reviews(company_id)
+
+    return render_template("company_info.html", loggedin=True, username=session["this_user"], company=company,
+                            reviews=reviews, users_rating=users_rating,
+                           users_rating_count=users_rating_count)
+
+
 # Return api request
 @app.route("/api/<string:company_id>")
 def company_api(company_id):
@@ -231,22 +252,18 @@ def company_api(company_id):
     # Fetch users ratings from database
     reviews, users_rating_count, users_rating = get_users_reviews(company_id)
 
-    return render_template("company_info.html", loggedin=True, username=session["this_user"], company=company,
-                            reviews=reviews, users_rating=users_rating,
-                           users_rating_count=users_rating_count)
-
-    # Keep this json format
-    # return jsonify({
-    #     "company_id": company[0],
-    #     "name": company[1],
-    #     "industry": company[2],
-    #     "state": company[6],
-    #     "city": company[7],
-    #     "area": company[8],
-    #     "revenue": company[9],
-    #     "expenses": company[10],
-    #     "profit": company[11],
-    #     "growth": company[12],
-    #     "review_count": users_rating_count,
-    #     "average_score": users_rating
-    # })
+    #Keep this json format
+    return jsonify({
+        "company_id": company[0],
+        "name": company[1],
+        "industry": company[2],
+        "state": company[6],
+        "city": company[7],
+        "area": company[8],
+        "revenue": company[9],
+        "expenses": company[10],
+        "profit": company[11],
+        "growth": company[12],
+        "review_count": users_rating_count,
+        "average_score": users_rating
+    })

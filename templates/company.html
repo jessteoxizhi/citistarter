@@ -19,8 +19,8 @@
         </div>
     {% endif %}
 
-    <h1>CitiStarter Review Webpage</h1>
-    <p>View company reviews or submit your reviews!</p>
+    <h1>Citi<span style="color: #3d85c6;">Starter</span></h1>
+    <p>Connecting Investors and Startups</p>
 </div>
 
 <div class="container">
@@ -49,9 +49,16 @@
                     <!-- display company information -->
                     <div class="card-header mb-5">
                         <h2 class="card-title mt-3 text-center" >{{ company.name }}</h2>
-                        <p class="text-center"><a href="{{ url_for('company_api', company_id=company.company_id)}}">Learn More</a></p>
-                        <p class="text-center">since</p>
-                        <h5 class="text-center">{{ company.year_founded }}</h5>
+                        <h5 class="text-center">Year Founded: {{ company.year_founded }}</h5>
+                        <h5 class="text-center">Industry: {{ company.industry }}</h5>
+                        <h5 class="text-center">State: {{ company.state }}</h5>
+                        <h5 class="text-center">City: {{ company.city }}</h5>
+                        <h5 class="text-center">Area: {{ company.area }}</h5>
+                        <h5 class="text-center">Revenue: {{ company.revenue }}</h5>
+                        <h5 class="text-center">Expenses: {{ company.expenses }}</h5>
+                        <h5 class="text-center">Profit: {{ company.profit }}</h5>
+                        <h5 class="text-center">Growth: {{ company.growth }}</h5>
+                        <p class="text-center">{{ company.description }}</p>
                         <p class="text-center"><i>company_id:{{ company.company_id }}</i></p>
                     </div>
 
